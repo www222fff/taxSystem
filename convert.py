@@ -49,8 +49,8 @@ def main():
 
     # Read the Excel file with merged cells
     excel_df = read_excel_with_merged_cells(excel_file)
-    # Print the entire DataFrame to understand its structure
-    print("Excel DataFrame content:\n", excel_df)
+
+    # print("Excel DataFrame content:\n", excel_df)
     print("Excel DataFrame columns:\n", excel_df.columns)
 
     # Read the existing HTML file
@@ -72,7 +72,7 @@ def main():
                 tds = tr.find_all('td')
                 # Replace the values in the <td> elements with the values from the Excel row
                 # Ensure the indices exist in data_row before accessing them
-                indices_to_replace = [9, 14, 17, 22, 25]
+                indices_to_replace = [9, 14, 18, 23, 26]
                 existing_indices = [i for i in indices_to_replace if i in data_row.index]
 
                 # Extract values from the existing indices
