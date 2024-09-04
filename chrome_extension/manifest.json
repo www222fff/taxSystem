@@ -1,0 +1,24 @@
+{
+  "manifest_version": 3,
+  "name": "danny",
+  "version": "1.0",
+  "description": "Automatically run custom JavaScript code on specific websites.",
+  "content_scripts": [
+    {
+      "matches": ["https://etax.qingdao.chinatax.gov.cn:8443/loginb/"],
+      "js": ["login.js"],
+      "run_at": "document_start"
+    },
+    {
+      "matches": ["https://etax.qingdao.chinatax.gov.cn:8443/szzh/zhcx/sbxx/sbxxcx*"],
+      "js": ["search.js"],
+      "run_at": "document_end"
+    }
+  ],
+  "permissions": [
+    "activeTab",
+    "scripting"
+  ]
+}
+
+
