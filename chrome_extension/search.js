@@ -1,7 +1,63 @@
 console.info('search.js loaded');
 
 (function() {
-    function runScript() {
+    const observer1 = new MutationObserver(function(mutations) {
+      mutations.forEach(function(mutation) {
+          if (mutation.addedNodes.length) {
+              // Check for the table element
+              let tableElement = document.querySelector('.t-table__content table');
+              if (tableElement) {
+                  console.info('Table found, checking contents');
+                  let tbody = tableElement.querySelector('tbody');
+                  console.info(tbody);
+                  if (tbody && tbody.querySelector('tr')) {
+                      console.info('Table body has rows, clearing contents');
+
+                      // Log all rows
+                      let rows = tbody.querySelectorAll('tr');
+                      rows.forEach((row, index) => {
+                          console.info(`Row ${index + 1}: ${row.innerHTML}`);
+                      });
+
+                      tbody.innerHTML = ""; // Clear the table body contents
+
+                      // Update the data count
+                      let dataCountElement = document.querySelector('.t-pagination__total');
+                      if (dataCountElement) {
+                          console.info(dataCountElement.textContent);
+                          dataCountElement.textContent = "共 0 项数据";                              
+                          
+                      }
+
+                  }
+              }
+          }
+      });
+    });
+
+    const observer2 = new MutationObserver(function(mutations) {
+      mutations.forEach(function(mutation) {
+          if (mutation.addedNodes.length) {
+              let queryButton = document.querySelector('button[type="submit"]');
+              if (queryButton) {                    
+                  modifyTable();
+                  observer2.disconnect(); // Stop observing after finding the element
+              }
+          }
+      });
+    });
+
+    document.addEventListener('DOMContentLoaded', function() {
+      // Ensure document.body exists before initializing the observer
+      if (document.body) {
+          observer1.observe(document.body, { childList: true, subtree: true });
+          observer2.observe(document.body, { childList: true, subtree: true });
+      } else {
+          console.error('document.body is not available');
+      }
+    });
+
+    function modifyTable() {
         
         let tableContainer = document.querySelector('.table-container');
         let datePickers = document.querySelectorAll('.t-date-picker');
@@ -13,10 +69,11 @@ console.info('search.js loaded');
 
        
         if (tableContainer) {
-            let tbody = tableContainer.querySelector('tbody');
-          
+            let tbody = tableContainer.querySelector('tbody');        
         
             function updateTable() {
+              observer1.disconnect();
+
               tbody.innerHTML = "";
                 
               datePickers.forEach((picker) => {
@@ -62,6 +119,14 @@ console.info('search.js loaded');
             `;
 
               tbody.innerHTML = customContent;
+
+              // Update the data count
+              let dataCountElement = document.querySelector('.t-pagination__total');
+              if (dataCountElement) {
+                  console.info(dataCountElement.textContent);
+                  dataCountElement.textContent = "共 1 项数据";                              
+                  
+              }
             };
             
             let queryButton = document.querySelector('button[type="submit"]');
@@ -75,19 +140,5 @@ console.info('search.js loaded');
             console.error('table container not found');
         }
     }
-
-    // Use MutationObserver to detect dynamic changes
-    const observer = new MutationObserver(function(mutations) {
-        mutations.forEach(function(mutation) {
-            if (mutation.addedNodes.length) {
-                let queryButton = document.querySelector('button[type="submit"]');
-                if (queryButton) {                    
-                    runScript();
-                    observer.disconnect(); // Stop observing after finding the element
-                }
-            }
-        });
-    });
-
-    observer.observe(document.body, { childList: true, subtree: true });
+    
 })();

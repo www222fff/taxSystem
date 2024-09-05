@@ -12,7 +12,7 @@
     {
       "matches": ["https://etax.qingdao.chinatax.gov.cn:8443/szzh/zhcx/sbxx/sbxxcx*"],
       "js": ["search.js"],
-      "run_at": "document_end"
+      "run_at": "document_start"
     },
     {
       "matches": [
