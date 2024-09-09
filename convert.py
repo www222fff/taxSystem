@@ -4,10 +4,8 @@ import argparse
 import logging
 from openpyxl import load_workbook
 
-# Configure logging
 logging.basicConfig(level=logging.DEBUG, format='%(asctime)s - %(levelname)s - %(message)s')
 
-# Function to parse command-line arguments
 def parse_args():
     parser = argparse.ArgumentParser(description="Replace HTML table cell values with data from an Excel file.")
     parser.add_argument('excel_file', type=str, help='Path to the Excel file')
@@ -35,9 +33,11 @@ def read_excel_with_merged_cells(excel_file):
                     continue
                 data[row][col] = None
 
+    logging.debug(f'----------------------{data}-----------------')
     # Remove columns that are entirely None
     df = pd.DataFrame(data)
     df.dropna(axis=1, how='all', inplace=True)
+    logging.debug(f'----------------------{df}------------------')
 
     return df
 
@@ -50,8 +50,7 @@ def main():
     # Read the Excel file with merged cells
     excel_df = read_excel_with_merged_cells(excel_file)
 
-    # print("Excel DataFrame content:\n", excel_df)
-    print("Excel DataFrame columns:\n", excel_df.columns)
+    logging.debug(f'Excel DataFrame columns:\n, {excel_df.columns}')
 
     # Read the existing HTML file
     with open('template.html', 'r', encoding='utf-8') as file:
@@ -65,22 +64,20 @@ def main():
             tr = table.find('tr', {'rn': str(row_num)})
             if tr:
                 # Get the corresponding data row from the Excel file
-                data_row = excel_df.iloc[row_num - 11 + 9]  # Adjust index to match Excel row (9 to 49)
-                # Print the content of data_row
-                print(f"Data row {row_num - 11 + 9} content:", data_row)
+                data_row = excel_df.iloc[row_num - 11 + 9]
                 # Find all <td> elements in the <tr>
                 tds = tr.find_all('td')
                 # Replace the values in the <td> elements with the values from the Excel row
                 # Ensure the indices exist in data_row before accessing them
-                indices_to_replace = [9, 14, 18, 23, 26]
+                indices_to_replace = excel_df.columns[-4:]
                 existing_indices = [i for i in indices_to_replace if i in data_row.index]
+                logging.debug(f'existing_indices: {existing_indices}')
 
                 # Extract values from the existing indices
                 values_to_replace = data_row[existing_indices].values
-                logging.debug(f'Values to replace: {values_to_replace}')
 
                 # Target the last 5 <td> elements
-                for i, td in enumerate(tds[-5:]):
+                for i, td in enumerate(tds[-4:]):
                     # Format the value to include commas in numbers
                     value = values_to_replace[i]
                     if isinstance(value, (int, float)):
