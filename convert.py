@@ -1,3 +1,5 @@
+#!!!!Important note: before convert firstly only keep first page, remove left pages 
+
 import pandas as pd
 from bs4 import BeautifulSoup
 import argparse
@@ -80,6 +82,7 @@ def main():
                 for i, td in enumerate(tds[-4:]):
                     # Format the value to include commas in numbers
                     value = values_to_replace[i]
+                    logging.debug(f'value: {value}')
                     if isinstance(value, (int, float)):
                         td.string = f'{value:,.2f}'
                     else:

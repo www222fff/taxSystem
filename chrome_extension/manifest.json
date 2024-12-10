@@ -16,9 +16,10 @@
     },
     {
       "matches": [
-        "https://etax-qingdao-chinatax-gov-cn-2308.pages.dev/*",
+        "https://etax-qingdao-chinatax-gov-cn-2112.pages.dev/*",
+        "https://etax-qingdao-chinatax-gov-cn-2212.pages.dev/*",
         "https://etax-qingdao-chinatax-gov-cn-2312.pages.dev/*",
-        "https://etax-qingdao-chinatax-gov-cn-2408.pages.dev/*"
+        "https://etax-qingdao-chinatax-gov-cn-2410.pages.dev/*"
       ],
       "js": ["address.js"],
       "run_at": "document_end"
