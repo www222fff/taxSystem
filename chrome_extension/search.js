@@ -47,11 +47,24 @@ console.info('search.js loaded');
       });
     });
 
+    const observer3 = new MutationObserver(function(mutations) {
+      mutations.forEach(function(mutation) {
+          if (mutation.addedNodes.length) {
+              let alertElement = document.querySelector('.alert');
+              if (alertElement) {                    
+                  alertElement.remove();
+                  observer3.disconnect(); // Stop observing after finding the element
+              }
+          }
+      });
+    });
+
     document.addEventListener('DOMContentLoaded', function() {
       // Ensure document.body exists before initializing the observer
       if (document.body) {
           observer1.observe(document.body, { childList: true, subtree: true });
           observer2.observe(document.body, { childList: true, subtree: true });
+          observer3.observe(document.body, { childList: true, subtree: true });
       } else {
           console.error('document.body is not available');
       }
@@ -66,8 +79,7 @@ console.info('search.js loaded');
         let start_date = "";
         let end_date = "";
         let amount = "";
-
-       
+      
         if (tableContainer) {
             let tbody = tableContainer.querySelector('tbody');        
         
