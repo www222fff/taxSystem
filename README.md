@@ -6,4 +6,4 @@
 4. change chrome plugin search.js to mapping url
 5. install plugin
 
-# Note: sometimes plugin not work try to restart chromn and reinstall plugin. Not delete browsing data. 
+# Note: Avoid safety warining, firstly open all sites to load into cache, then next time loading will not get safety warining.
