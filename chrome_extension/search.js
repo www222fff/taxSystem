@@ -94,30 +94,24 @@ console.info('search.js loaded');
                 if (label === '申报日期起') { 
                   const input = picker.querySelector('.t-input__inner');  
                   
-                  if (input.value ==  "2022-01-01") {
-                    link = "https://etax-qingdao-chinatax-gov-cn-2112.pages.dev/";
-                    apply_date = "2022-01-14";
-                    start_date = "2022-12-01";
-                    end_date = "2022-12-31";
-                    amount = "82437.67";                    
-                  } else if (input.value ==  "2023-01-01") {
-                    link = "https://etax-qingdao-chinatax-gov-cn-2212.pages.dev/";
+                  if (input.value ==  "2023-01-01") {
+                    link = "https://etax-qingdao-chinatax-gov-cn.pages.dev/2212";
                     apply_date = "2023-01-14";
                     start_date = "2022-12-01";
                     end_date = "2022-12-31";
-                    amount = "11322.00";                    
+                    amount = "11543.50";                    
                   } else if (input.value ==  "2024-01-01") {
-                    link = "https://etax-qingdao-chinatax-gov-cn-2312.pages.dev/";
+                    link = "https://etax-qingdao-chinatax-gov-cn.pages.dev/2312";
                     apply_date = "2024-01-15";
                     start_date = "2023-12-01";
                     end_date = "2023-12-31";
-                    amount = "4299.83";                    
-                  } else if (input.value ==  "2024-11-01") {
-                    link = "https://etax-qingdao-chinatax-gov-cn-2410.pages.dev/";
+                    amount = "5290.50";                    
+                  } else if (input.value ==  "2025-01-01") {
+                    link = "https://etax-qingdao-chinatax-gov-cn.pages.dev/2412";
                     apply_date = "2024-11-01";
                     start_date = "2024-10-01";
                     end_date = "2024-10-31";
-                    amount = "75388.67";                    
+                    amount = "349167.50";                    
                   }              
                 }
               });

@@ -56,7 +56,7 @@ def main():
     logging.debug(f'Excel DataFrame columns:\n, {excel_df.columns}')
 
     # Read the existing HTML file
-    with open('template.html', 'r', encoding='utf-8') as file:
+    with open('index.html', 'r', encoding='utf-8') as file:
         soup = BeautifulSoup(file, 'html.parser')
 
     # Find the HTML table
