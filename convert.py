@@ -1,9 +1,10 @@
-#!!!!Important note: before convert firstly only keep first page, remove left pages 
+#!!!!Important note: before convert firstly only keep first page in excel, remove table header and left pages 
 
 import pandas as pd
 from bs4 import BeautifulSoup
 import argparse
 import logging
+import os
 from openpyxl import load_workbook
 
 logging.basicConfig(level=logging.DEBUG, format='%(asctime)s - %(levelname)s - %(message)s')
@@ -11,7 +12,6 @@ logging.basicConfig(level=logging.DEBUG, format='%(asctime)s - %(levelname)s - %
 def parse_args():
     parser = argparse.ArgumentParser(description="Replace HTML table cell values with data from an Excel file.")
     parser.add_argument('excel_file', type=str, help='Path to the Excel file')
-    parser.add_argument('output_file', type=str, help='Path to the output HTML file')
     return parser.parse_args()
 
 def read_excel_with_merged_cells(excel_file):
@@ -46,11 +46,12 @@ def read_excel_with_merged_cells(excel_file):
 def main():
     # Parse command-line arguments
     args = parse_args()
-    excel_file = args.excel_file
-    output_file = args.output_file
+
+    base_name = os.path.splitext(args.excel_file)[0]
+    output_file = f"{base_name}.html"
 
     # Read the Excel file with merged cells
-    excel_df = read_excel_with_merged_cells(excel_file)
+    excel_df = read_excel_with_merged_cells(args.excel_file)
 
     logging.debug(f'Excel DataFrame columns:\n, {excel_df.columns}')
 
@@ -66,7 +67,7 @@ def main():
             tr = table.find('tr', {'rn': str(row_num)})
             if tr:
                 # Get the corresponding data row from the Excel file
-                data_row = excel_df.iloc[row_num - 11 + 9]
+                data_row = excel_df.iloc[row_num - 11]
                 # Find all <td> elements in the <tr>
                 tds = tr.find_all('td')
                 # Replace the values in the <td> elements with the values from the Excel row
